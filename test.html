@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #videoSection {
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <input id="url" type="text" placeholder="Paste youtube link here" onchange="embedVideo()">
+    <br>
+    <section id="videoSection">
+        <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/MTcaex6-rZg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </section>
+    <script type="text/javascript">
+
+        function isNullOrEmpty(str) {
+            return str == null || str === ""
+        }
+
+        function embedVideo() {
+            let url = document.getElementById('url').value;
+            console.log('url inserted is: ' + url)
+
+            let urlObj = new URL(url);
+            let path = urlObj.pathname.replace('/', '');
+            let params = urlObj.searchParams
+            let vParam = params.get('v')
+            let listParam = params.get('list')
+            let indexParam = params.get('index')
+            let embedUrlBase = "https://www.youtube.com/embed/"
+            let defaultVideoId = "Ygg0bXls8CA"
+            let embedUrl;
+            if (isNullOrEmpty(vParam) && isNullOrEmpty(listParam) && isNullOrEmpty(indexParam) && !isNullOrEmpty(path)) {   // like https://youtu.be/TaPdgj8mucI
+                let videoId = urlObj.pathname.replace('/', '');
+                embedUrl = embedUrlBase + videoId;
+                console.log('Set embed url for single video - no v param: ' + embedUrl)
+            } else if (!isNullOrEmpty(vParam) && isNullOrEmpty(listParam) && isNullOrEmpty(indexParam)) {                   // like https://www.youtube.com/watch?v=TaPdgj8mucI
+                embedUrl = embedUrlBase + vParam
+                console.log('Set embed url for single video - with v param: ' + embedUrl)
+            } else if (!isNullOrEmpty(listParam) && isNullOrEmpty(indexParam)) {                                            // like https://youtube.com/playlist?list=PLw3Mt4FUg5YTyFHl-kTJDbNEupzYkP5cR
+                embedUrl = embedUrlBase + "videoseries?list=" + listParam                                                   // or   https://www.youtube.com/watch?v=7t2yhojyHCY&list=PLlae17WKTjHkwQgBG4EgIIZy2LC-FklWn
+                console.log('Set embed url for playlist - no index: ' + embedUrl)
+            } else if (!isNullOrEmpty(listParam) && !isNullOrEmpty(indexParam)) {                                           // like https://www.youtube.com/watch?v=2jBbEA2SlhM&list=PLw3Mt4FUg5YTyFHl-kTJDbNEupzYkP5cR&index=2
+                embedUrl = embedUrlBase + "playlist?list=" + listParam + "&index=" + indexParam
+                console.log('Set embed url for playlist - with index: ' + embedUrl)
+            } else {
+                embedUrl = embedUrlBase + defaultVideoId;
+                console.log('Set embed url to default: ' + embedUrl)
+            }
+            document.getElementById('video').setAttribute('src', embedUrl);
+            document.getElementById('videoSection').style.visibility = "visible";
+        }
+    </script>
+</body>
+
+</html>
