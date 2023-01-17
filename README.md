@@ -6,3 +6,5 @@ Useful though when you're not allowed to install adblock helper on Chrome :P
 No hosting needed. Use it directly from
 
 https://htmlpreview.github.io/?https://github.com/GiorgosVal/youtube-embeder/blob/main/embed.html
+
+Note: Not all videos will be able to play due to license restrictions of thevideo creators
