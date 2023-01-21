@@ -5,8 +5,10 @@ Useful though when you're not allowed to install adblock helper on Chrome :P
 
 No hosting needed. Use it directly from
 
-https://htmlpreview.github.io/?https://github.com/GiorgosVal/youtube-embeder/blob/main/youtubenoads.html
+https://htmlpreview.github.io/?https://github.com/GiorgosVal/youtube-embeder/blob/main/utubenoads.html
+
 or
-https://tinyurl.com/mr4dt3vk
+
+https://tinyurl.com/3s6c7kma
 
 Note: Not all videos will be able to play due to license restrictions of thevideo creators
