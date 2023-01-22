@@ -101,11 +101,19 @@
             document.getElementById("errorMsg").innerHTML = ""
         }
 
+        function checkUrlValidity(str) {
+            var reg = new RegExp(/^http(s)*:\/\/(www\.)*youtu(\.)*be(\.com)*\/.+/gm)
+            if (!reg.test(str)) {
+                throw new Error('Not a YouTube link')
+            }
+        }
+
         function setVideoUrl() {
 
             try {
                 let url = document.getElementById('url').value.replaceAll(" ", "");
                 console.log('url inserted is: ' + url)
+                checkUrlValidity(url)
 
                 let urlObj = new URL(url);
                 let path = urlObj.pathname.replace('/', '');
