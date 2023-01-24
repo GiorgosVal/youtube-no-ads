@@ -15,7 +15,7 @@
     </style>
 </head>
 
-<body id="body" class="bg-light text-danger" onload="switchMode()">
+<body id="body" class="bg-light text-danger" onload="selectMode()">
     <div class="container">
         <h1 class="text-center pt-3">YouTube no ads player</h1>
         <p class="text-center">Play videos from YouTube without annoying advertisements</p>
@@ -58,35 +58,56 @@
             cleanErrorMsg()
         }
 
-        function switchMode() {
+        function setDarkMode() {
+            console.log("Setting dark mode...")
             var body = document.getElementById("body");
             var clearButton = document.getElementById("clearButton");
             var urlInput = document.getElementById("url");
+            body.classList.add("bg-dark")
+            body.classList.add("text-opacity-50")
+            body.classList.remove("bg-light")
+            clearButton.classList.add("btn-outline-danger")
+            clearButton.classList.remove("btn-danger")
+            urlInput.classList.add("bg-dark")
+            urlInput.classList.add("border-danger")
+            urlInput.style.color = "#ff0000c6"
+            setCookie("mode", "dark", 1)
+        }
+
+        function setLightMode() {
+            console.log("Switching to light mode...")
+            var body = document.getElementById("body");
+            var clearButton = document.getElementById("clearButton");
+            var urlInput = document.getElementById("url");
+            body.classList.remove("text-opacity-50")
+            body.classList.remove("bg-dark")
+            body.classList.add("text-danger")
+            body.classList.add("bg-light")
+            clearButton.classList.remove("btn-outline-danger")
+            clearButton.classList.add("btn-danger")
+            urlInput.classList.remove("bg-dark")
+            urlInput.classList.remove("border-danger")
+            urlInput.style.color = ""
+            setCookie("mode", "light", 1)
+        }
+
+        function selectMode() {
             var modeCookie = getCookie("mode");
-            console.log("mode cookie: "+ modeCookie)
-            if (modeCookie == 'dark' || modeCookie == '') {
-                console.log("Switching to light mode...")
-                body.classList.remove("text-opacity-50")
-                body.classList.remove("bg-dark")
-                body.classList.add("text-danger")
-                body.classList.add("bg-light")
-                clearButton.classList.remove("btn-outline-danger")
-                clearButton.classList.add("btn-danger")
-                urlInput.classList.remove("bg-dark")
-                urlInput.classList.remove("border-danger")
-                urlInput.style.color = ""
-                setCookie("mode", "light", 1)
+            console.log("mode cookie: " + modeCookie)
+            if (modeCookie == 'dark') {
+                setDarkMode()
             } else {
-                console.log("Switching to dark mode...")
-                body.classList.add("bg-dark")
-                body.classList.add("text-opacity-50")
-                body.classList.remove("bg-light")
-                clearButton.classList.add("btn-outline-danger")
-                clearButton.classList.remove("btn-danger")
-                urlInput.classList.add("bg-dark")
-                urlInput.classList.add("border-danger")
-                urlInput.style.color = "#ff0000c6"
-                setCookie("mode", "dark", 1)
+                setLightMode()
+            }
+        }
+
+        function switchMode() {
+            var modeCookie = getCookie("mode");
+            console.log("mode cookie: " + modeCookie)
+            if (modeCookie == 'dark' || modeCookie == '') {
+                setLightMode()
+            } else {
+                setDarkMode()
             }
         }
 
